@@ -4,7 +4,7 @@ const data = require('../seedData/testData');
 module.exports = {
   up: (queryInterface, Sequelize) => {
 
-   return queryInterface.bulkInsert('Blogs', data);
+   return queryInterface.bulkInsert('Blogs', data.blogs);
   },
 
   down: (queryInterface, Sequelize) => {

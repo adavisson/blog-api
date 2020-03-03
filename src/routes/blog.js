@@ -1,10 +1,13 @@
 const express = require('express');
-// const db = require('../persistence/models');
+const db = require('../persistence/models');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send("All blogs");
+router.get('/', async (req, res) => {
+  let blogs = await db.Blog.findAll({
+    attributes: ['id', 'date', 'title', 'content']
+  });
+  res.send(blogs);
 });
 
 router.get('/:id', (req, res) => {
