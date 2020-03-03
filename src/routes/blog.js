@@ -10,8 +10,12 @@ router.get('/', async (req, res) => {
   res.send(blogs);
 });
 
-router.get('/:id', (req, res) => {
-  res.send(`Blog #${req.params.id}`);
+router.get('/:id', async (req, res) => {
+  let blog = await db.Blog.findAll({
+    where: {id: req.params.id},
+    attributes: ['id', 'date', 'title', 'content']
+  });
+  res.send(blog);
 });
 
 module.exports = router;
