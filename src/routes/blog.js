@@ -18,4 +18,8 @@ router.get('/:id', async (req, res) => {
   res.send(blog);
 });
 
+router.post('/', (req, res) => {
+  res.send("Blog Post Route")
+});
+
 module.exports = router;
