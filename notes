@@ -1,0 +1,6 @@
+models
+--------
+post
+- date
+- title
+- content
