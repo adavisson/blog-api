@@ -18,8 +18,9 @@ router.get('/:id', async (req, res) => {
   res.send(blog);
 });
 
-router.post('/', (req, res) => {
-  res.send("Blog Post Route")
+router.post('/', async (req, res) => {
+  let post = await db.Blog.create({date: req.body.date, title: req.body.title, content: req.body.content});
+  res.send(post);
 });
 
 module.exports = router;

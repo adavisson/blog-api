@@ -1,11 +1,11 @@
-// const subjectRouter = require('./src/routes/subject');
-// const questionRouter = require('./src/routes/question');
 const blogRouter = require('./src/routes/blog');
-const express = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express()
 const port = 3001
 
-//app.use(express.json);
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.send('Blog API'))
 
