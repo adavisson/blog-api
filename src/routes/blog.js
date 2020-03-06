@@ -23,4 +23,12 @@ router.post('/', async (req, res) => {
   res.send(post);
 });
 
+// Delete route
+router.delete('/:id', async (req, res) => {
+  await db.Blog.destroy({
+    where: {id: req.params.id}
+  });
+  res.send(`Deleted blog with id: ${req.params.id}`);
+});
+
 module.exports = router;
