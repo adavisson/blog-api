@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: nodejs
+    restart: always
+    env_file: .env
+    environment: 
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DEV_DATABASE: ${MYSQL_DEV_DATABASE}
+      MYSQL_TEST_DATABASE: ${MYSQL_TEST_DATABASE}
+      MYSQL_HOST: ${MYSQL_HOST}
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - blog-network
+    command: ./wait-for.sh db:3306 
+    command: /home/node/app/entrypoint.sh
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DEV_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - blog-network
+  
+networks:
+  blog-network:
+    driver: bridge
+
+volumes:
+  db:
+  node_modules:
